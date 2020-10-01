@@ -1,4 +1,6 @@
 import datetime
+import pyautogui
+import getpass
 import speech_recognition as sr
 import pyttsx3
 import wikipedia
@@ -10,7 +12,7 @@ engine = pyttsx3.init()
 voices = engine.getProperty('voices')
 engine.setProperty('voice', voices[0].id)
 engine.setProperty('rate', 185)
-
+password = "hello"
 
 def speak(audio):
     engine.say(audio)
@@ -30,7 +32,21 @@ def wishMe():
     speak('How can i help you?')
     #speak('I am virtual assistant designed to Help you!!')
 
+def passWord():
+    n = getpass.getpass('>> ')
 
+    if n == password:
+        print("The password is ended with status (DONE)\n")
+
+    else:
+        print("The code is exited with status (NOT DONE)\nSorry you can't able to use jarvis")
+        time.sleep(5)
+        quit()
+
+def screenshot():
+    img = pyautogui.screenshot()
+    img.save("D:\\scr\\screenshot.png") #path where screenshot will be saved
+        
 def takeCommand():
     '''
     It takes microphone input from user and returns a string
@@ -55,6 +71,7 @@ def takeCommand():
 
 
 if __name__ == '__main__':
+    passWord
     wishMe()
     while True:
         query =  takeCommand().lower()
@@ -73,7 +90,12 @@ if __name__ == '__main__':
         elif 'open stackoverflow' in query:
             webbrowser.open('stackoverflow.com')
         elif 'open music' in query:
-              path = 'C:\\Users\\haneef\\Pictures\\shareit'
+            path = 'C:\\Users\\haneef\\Pictures\\shareit'
             os.startfile()
+        elif "take screenshot" in query:
+            speak("taking screenshot")
+            screenshot()
         elif 'quit' in query:
             sys.exit()
+        else:
+            speak("sorry the command you entered is not stisfied")
